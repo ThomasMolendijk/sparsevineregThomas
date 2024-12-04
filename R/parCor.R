@@ -1,6 +1,7 @@
 #' internal function
 #' @noRd
 
+#Given a matrix M of partial correlations of all pairs of variables, find the partial correlation of j,k given 'given'.
 ParCor <- function(M, given, j, k) {
   M_11 <- M[given, given]
   jk <- c(j, k)
