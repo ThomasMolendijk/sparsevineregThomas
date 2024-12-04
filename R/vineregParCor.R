@@ -28,7 +28,7 @@ vineregParCor <- function(df, cores_vine){
     df_cor_test <- vector()
     #For every explanatory variable, find the (absolute value of) partial correlation of the response variable, explanatory variable given all explanatory variables already added to the D-vine
     for(i in 1:length(var_indx)){
-      mdl_single <- abs(ParCor(cor_mat, single_vars+1, 1,  (1+var_indx[i]))) #Q: what does single_vars+1 do?
+      mdl_single <- abs(ParCor(cor_mat, single_vars+1, 1,  (1+var_indx[i]))) #Q: what does single_vars+1 do when single_vars is an empty vector in the first iteration?
       if(mdl_single > thr_single){
         thr_single <- mdl_single
         var_single <- var_indx[i]
