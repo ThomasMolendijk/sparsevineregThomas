@@ -1,6 +1,7 @@
 #' internal function
 #' @noRd
 
+#Rank-based normalization
 norm_score <- function(df){
   n_col <- ncol(df)
   n_row <- nrow(df)
