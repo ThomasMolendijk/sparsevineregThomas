@@ -12,8 +12,10 @@ vineregRes <- function(df, alpha, cores_vine, cores_varsel){
   thr_caic <- 1000000
   while(cond==TRUE){
     thr_single <- -1000000
+    #Create a list for each candidate variable, each list consisting of (i) the residual if that candidate variable is added, (ii) the vine copula if that candidate variable is added
     mdl_single <- parallel::mclapply(1:length(var_indx), function(k)  est_resid(response, df[,(1+var_indx[k])], colnames(df)[(1+var_indx[k])]),
                                      mc.cores=cores_varsel)
+  
     for(i in 1:length(mdl_single)){
       cand_cll <- mdl_single[[i]]$fit$stats$cll
       if(cand_cll > thr_single){
@@ -25,7 +27,7 @@ vineregRes <- function(df, alpha, cores_vine, cores_varsel){
     var_indx <- setdiff(var_indx, var_single)
     cand_vars <- df[,(1+single_vars)]
     name_cnd <- colnames(df)[(1+single_vars)]
-    mdl <- est_resid(df[,1], cand_vars, name_cnd, alpha, 1, cores_vine)
+    mdl <- est_resid(df[,1], cand_vars, name_cnd, alpha, 1, cores_vine) #Q: Does this function not repeat the estimation process of the whole D-vine instead of only adding the newest variable?
     prev_mdl[[count]] <- mdl
     mdl_caic <- mdl$fit$stats$caic
     response <- mdl$resid
