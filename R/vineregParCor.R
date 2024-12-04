@@ -38,7 +38,7 @@ vineregParCor <- function(df, cores_vine){
     var_indx <- setdiff(var_indx, var_single)
     cand_vars <- df[,(1+single_vars)]
     name_cnd <- colnames(df)[(1+single_vars)]
-    mdl <- update_mdl(df[,1], cand_vars, name_cnd, cores_vine)
+    mdl <- update_mdl(df[,1], cand_vars, name_cnd, cores_vine) #Q: Does this not fit the whole model again, instead of only adding the new variable?
     prev_mdl[[count]] <- mdl
     mdl_caic <- mdl$fit$stats$caic
     if(mdl_caic >= thr_caic){
