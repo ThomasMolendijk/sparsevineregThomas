@@ -66,7 +66,7 @@
 #' @importFrom parallel mclapply
 #' @importFrom stats cor qnorm
 
-
+#Function does both vineregRes and vineregParCor, and returns the best model (I think)
 sparsevinereg <- function(df, alpha=0.50, varsel=c("ParCor", "resid"),
                           vinegraph=c("Dvine"), cores_vine=1, cores_varsel=1, crit_vine='caic'){
   initial_df_check(df)
