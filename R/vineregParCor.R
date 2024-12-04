@@ -2,6 +2,7 @@
 #' @noRd
 
 vineregParCor <- function(df, cores_vine){
+  #Initialize 
   var_indx <- 1:(ncol(df)-1)
   cond <- TRUE
   single_vars <- vector()
@@ -10,15 +11,22 @@ vineregParCor <- function(df, cores_vine){
   total_vars <- length(var_indx)
   thr_caic <- 1000000
   u_vars <- matrix(0, nrow(df), ncol(df))
+  
+  #For every variable, do rank-based conversion to rank-associated uniform values
   for(j in 1:ncol(df)){
     u_vars[,j] <- u_scale(df[,j])
   }
+
+  #Convert the rank-associated uniform values to rank-associated standard normal values. Q: why not go straight to rank-associated normal values?
   z_vars <- norm_score(u_vars)
+  #Compute Pearson's correlation coefficient for every pair of variables
   cor_mat <- stats::cor(z_vars)
+
   while(cond==TRUE){
     thr_single <- -2
     df_cor <- vector()
     df_cor_test <- vector()
+    #For every explanatory variable, 
     for(i in 1:length(var_indx)){
       mdl_single <- abs(ParCor(cor_mat, single_vars+1, 1,  (1+var_indx[i])))
       if(mdl_single > thr_single){
