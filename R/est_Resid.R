@@ -5,7 +5,7 @@ est_resid <- function(resp, cov, name_cnd=NA, alpha=NA, order=NA, cores_vine){
   data_upd <- data.frame(y = resp, cov)
   colnames(data_upd)[2:ncol(data_upd)] <- name_cnd
   if(is.na(order)){
-    fit_upd <- vinereg::vinereg(y ~ ., data=data_upd)
+    fit_upd <- vinereg::vinereg(y ~ ., data=data_upd, family_set = "all")
     res <- list("fit"=fit_upd)
   }
   else{
